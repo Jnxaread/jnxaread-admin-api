@@ -8,13 +8,17 @@
         <version>0.0.1</version>
         <relativePath/>
     </parent>
-    <groupId>com.jnxaread</groupId>
     <artifactId>jnxaread-admin-api</artifactId>
     <version>0.0.1</version>
     <name>jnxaread-admin-api</name>
     <description>谨下计划后台服务系统</description>
 
     <dependencies>
+        <dependency>
+            <groupId>com.jnxaread</groupId>
+            <artifactId>jnxaread-core</artifactId>
+            <version>0.0.1</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
