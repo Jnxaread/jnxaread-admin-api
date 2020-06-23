@@ -1,6 +1,6 @@
-package com.jnxaread.service;
+package com.jnxaread.service.impl;
 
-import com.jnxaread.service.impl.BaseAuthorityServiceImpl;
+import com.jnxaread.service.AuthorityService;
 import org.springframework.stereotype.Service;
 
 /**
