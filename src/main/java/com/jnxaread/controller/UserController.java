@@ -6,6 +6,7 @@ import com.jnxaread.entity.UnifiedResult;
 import com.jnxaread.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +21,7 @@ import java.util.List;
  * @create 2020-06-23 17:25
  */
 @RestController
-//@RequestMapping("/user")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
@@ -63,8 +64,27 @@ public class UserController {
         return UnifiedResult.ok(user);
     }
 
+    /**
+     * 管理员退出登录接口
+     *
+     * @param session
+     * @return
+     */
+    @PostMapping("/logout")
+    public UnifiedResult logout(HttpSession session) {
+        User admin = (User) session.getAttribute("admin");
+        if (admin == null) return UnifiedResult.build(400, "用户未登录", null);
+        session.removeAttribute("admin");
+        return UnifiedResult.ok();
+    }
+
+    /**
+     * 获取用户列表接口
+     *
+     * @return
+     */
     @PostMapping("/list/user")
-    public UnifiedResult getUserList(){
+    public UnifiedResult getUserList() {
         List<User> userList = userService.getUserList();
         return UnifiedResult.ok(userList);
     }
