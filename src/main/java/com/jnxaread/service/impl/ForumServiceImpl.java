@@ -1,10 +1,13 @@
 package com.jnxaread.service.impl;
 
 import com.jnxaread.bean.Board;
+import com.jnxaread.bean.BoardExample;
 import com.jnxaread.dao.BoardMapper;
 import com.jnxaread.service.ForumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author 未央
