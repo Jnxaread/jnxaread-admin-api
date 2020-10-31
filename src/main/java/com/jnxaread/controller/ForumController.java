@@ -3,11 +3,11 @@ package com.jnxaread.controller;
 import com.jnxaread.bean.Board;
 import com.jnxaread.entity.UnifiedResult;
 import com.jnxaread.service.ForumService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
@@ -19,13 +19,13 @@ import java.util.List;
 @RequestMapping("/forum")
 public class ForumController {
 
-    @Autowired
+    @Resource
     private ForumService forumService;
 
     /**
      * 获取版块列表接口
      *
-     * @return
+     * @return 版块列表
      */
     @PostMapping("/list/board")
     public UnifiedResult getBoardList() {
@@ -36,8 +36,8 @@ public class ForumController {
     /**
      * 添加版块接口
      *
-     * @param newBoard
-     * @return
+     * @param newBoard 新版块表单数据
+     * @return 新版块ID
      */
     @PostMapping("/new/board")
     public UnifiedResult addBoard(Board newBoard) {

@@ -4,11 +4,11 @@ import com.jnxaread.bean.Login;
 import com.jnxaread.bean.User;
 import com.jnxaread.entity.UnifiedResult;
 import com.jnxaread.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
@@ -24,14 +24,14 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
+    @Resource
     private UserService userService;
 
     /**
      * 管理员登录接口
      *
-     * @param request
-     * @return
+     * @param request 请求的request对象
+     * @return 用户信息
      */
     @PostMapping("/login")
     public UnifiedResult login(HttpServletRequest request) {
@@ -67,8 +67,8 @@ public class UserController {
     /**
      * 管理员退出登录接口
      *
-     * @param session
-     * @return
+     * @param session 会话对象
+     * @return 退出成功
      */
     @PostMapping("/logout")
     public UnifiedResult logout(HttpSession session) {
@@ -81,7 +81,7 @@ public class UserController {
     /**
      * 获取用户列表接口
      *
-     * @return
+     * @return 用户列表
      */
     @PostMapping("/list/user")
     public UnifiedResult getUserList() {

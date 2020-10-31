@@ -3,11 +3,11 @@ package com.jnxaread.controller;
 import com.jnxaread.bean.Category;
 import com.jnxaread.entity.UnifiedResult;
 import com.jnxaread.service.LibraryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
@@ -19,14 +19,14 @@ import java.util.List;
 @RequestMapping("/library")
 public class LibraryController {
 
-    @Autowired
+    @Resource
     private LibraryService libraryService;
 
     /**
      * 获取所有作品类别接口
      * 该接口不需要进行权限校验
      *
-     * @return
+     * @return 作品类别列表
      */
     @PostMapping("/list/category")
     public UnifiedResult getCategoryList() {
@@ -37,8 +37,8 @@ public class LibraryController {
     /**
      * 添加作品分类接口
      *
-     * @param newCategory
-     * @return
+     * @param newCategory 新作品分类
+     * @return 新类别ID
      */
     @PostMapping("/new/category")
     public UnifiedResult addCategory(Category newCategory) {

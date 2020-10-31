@@ -2,10 +2,10 @@ package com.jnxaread.controller;
 
 import com.jnxaread.bean.Authority;
 import com.jnxaread.service.AuthorityService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -16,13 +16,12 @@ import java.util.List;
 @RestController
 public class AuthorityController {
 
-    @Autowired
+    @Resource
     private AuthorityService authorityService;
 
     @RequestMapping("/getList")
     public List<Authority> getList(){
-        List<Authority> authorityList = authorityService.getAuthorityList();
-        return authorityList;
+        return authorityService.getAuthorityList();
     }
 
 }
