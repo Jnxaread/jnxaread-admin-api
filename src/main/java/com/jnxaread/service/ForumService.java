@@ -1,6 +1,7 @@
 package com.jnxaread.service;
 
 import com.jnxaread.bean.Board;
+import com.jnxaread.bean.Notice;
 
 /**
  * @author 未央
@@ -9,5 +10,7 @@ import com.jnxaread.bean.Board;
 public interface ForumService extends BaseForumService {
 
     int addBoard(Board newBoard);
+
+    int addNotice(Notice newNotice);
 
 }

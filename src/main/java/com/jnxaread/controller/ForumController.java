@@ -1,6 +1,8 @@
 package com.jnxaread.controller;
 
 import com.jnxaread.bean.Board;
+import com.jnxaread.bean.Notice;
+import com.jnxaread.bean.User;
 import com.jnxaread.entity.UnifiedResult;
 import com.jnxaread.service.ForumService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +24,18 @@ public class ForumController {
 
     @Resource
     private ForumService forumService;
+
+    @PostMapping("/new/notice")
+    public UnifiedResult submitNotice(HttpSession session, Notice newNotice) {
+        User admin = (User) session.getAttribute("admin");
+        newNotice.setUserId(admin.getId());
+        newNotice.setLastUserId(admin.getId());
+        Date date = new Date();
+        newNotice.setCreateTime(date);
+        newNotice.setLastTime(date);
+        int noticeId = forumService.addNotice(newNotice);
+        return UnifiedResult.ok(noticeId);
+    }
 
     /**
      * 获取版块列表接口
