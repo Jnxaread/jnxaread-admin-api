@@ -1,9 +1,10 @@
 package com.jnxaread.controller;
 
-import com.jnxaread.bean.Login;
 import com.jnxaread.bean.User;
 import com.jnxaread.entity.UnifiedResult;
 import com.jnxaread.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,6 +26,8 @@ public class UserController {
 
     @Resource
     private UserService userService;
+
+    private final Logger logger = LoggerFactory.getLogger("login");
 
     /**
      * 管理员登录接口
@@ -51,15 +53,9 @@ public class UserController {
         }
         session.setAttribute("admin", user);
 
-        //记录用户登录ip、时间
-        Login newLogin = new Login();
-        newLogin.setIP(request.getRemoteAddr());
-        newLogin.setUserId(user.getId());
-        newLogin.setCreateTime(new Date());
-        //记录用户登录终端
-        newLogin.setTerminal(request.getHeader("User-Agent"));
-        newLogin.setSystem(1);
-        userService.addLogin(newLogin);
+        // user:245,time:1667889656335,IP:192.169.2.105,terminal:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36,system:0
+        String loginMsg = user.getId() + "-" + request.getRemoteAddr() + "-1-" + request.getHeader("User-Agent");
+        logger.info(loginMsg);
 
         return UnifiedResult.ok(user);
     }
