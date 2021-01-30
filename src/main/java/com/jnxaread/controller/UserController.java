@@ -41,7 +41,7 @@ public class UserController {
 
         //先判断用户是否已经登录
         if (session.getAttribute("admin") != null) {
-            return UnifiedResult.build(400, "管理员已登录", null);
+            return UnifiedResult.build("400", "管理员已登录", null);
         }
 
         String account = request.getParameter("account");
@@ -49,7 +49,7 @@ public class UserController {
 
         User user = userService.getUserByAccount(account);
         if (!account.equals("LiSong-ux") || !password.equals(user.getPassword())) {
-            return UnifiedResult.build(400, "用户名或密码错误", null);
+            return UnifiedResult.build("400", "用户名或密码错误", null);
         }
         session.setAttribute("admin", user);
 
@@ -69,7 +69,7 @@ public class UserController {
     @PostMapping("/logout")
     public UnifiedResult logout(HttpSession session) {
         User admin = (User) session.getAttribute("admin");
-        if (admin == null) return UnifiedResult.build(400, "用户未登录", null);
+        if (admin == null) return UnifiedResult.build("400", "用户未登录", null);
         session.removeAttribute("admin");
         return UnifiedResult.ok();
     }
