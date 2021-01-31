@@ -3,8 +3,9 @@ package com.jnxaread.service.impl;
 import com.jnxaread.bean.Category;
 import com.jnxaread.dao.CategoryMapper;
 import com.jnxaread.service.LibraryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * @author 未央
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class LibraryServiceImpl extends BaseLibraryServiceImpl implements LibraryService {
 
-    @Autowired(required = false)
+    @Resource
     private CategoryMapper categoryMapper;
 
     @Override

@@ -4,9 +4,9 @@ import com.jnxaread.bean.User;
 import com.jnxaread.bean.UserExample;
 import com.jnxaread.dao.UserMapper;
 import com.jnxaread.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class UserServiceImpl extends BaseUserServiceImpl implements UserService {
 
-    @Autowired(required = false)
+    @Resource
     private UserMapper userMapper;
 
     @Override
