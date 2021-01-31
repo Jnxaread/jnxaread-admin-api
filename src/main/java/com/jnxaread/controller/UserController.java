@@ -5,6 +5,7 @@ import com.jnxaread.entity.UnifiedResult;
 import com.jnxaread.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,7 +49,8 @@ public class UserController {
         String password = request.getParameter("password");
 
         User user = userService.getUserByAccount(account);
-        if (!account.equals("LiSong-ux") || !password.equals(user.getPassword())) {
+        String ciphertext = DigestUtils.md5DigestAsHex(password.getBytes());
+        if (!account.equals("LiSong-ux") || !user.getPassword().equals(ciphertext.toUpperCase())) {
             return UnifiedResult.build("400", "用户名或密码错误", null);
         }
         session.setAttribute("admin", user);
