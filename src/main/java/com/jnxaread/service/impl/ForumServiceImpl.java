@@ -2,8 +2,8 @@ package com.jnxaread.service.impl;
 
 import com.jnxaread.bean.Board;
 import com.jnxaread.bean.Notice;
-import com.jnxaread.dao.BoardMapper;
-import com.jnxaread.dao.NoticeMapper;
+import com.jnxaread.dao.wrap.BoardMapperWrap;
+import com.jnxaread.dao.wrap.NoticeMapperWrap;
 import com.jnxaread.service.ForumService;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +17,10 @@ import javax.annotation.Resource;
 public class ForumServiceImpl extends BaseForumServiceImpl implements ForumService {
 
     @Resource
-    private BoardMapper boardMapper;
+    private BoardMapperWrap boardMapper;
 
     @Resource
-    private NoticeMapper noticeMapper;
+    private NoticeMapperWrap noticeMapper;
 
     @Override
     public int addBoard(Board newBoard) {

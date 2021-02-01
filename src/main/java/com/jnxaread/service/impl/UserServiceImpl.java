@@ -2,7 +2,7 @@ package com.jnxaread.service.impl;
 
 import com.jnxaread.bean.User;
 import com.jnxaread.bean.UserExample;
-import com.jnxaread.dao.UserMapper;
+import com.jnxaread.dao.wrap.UserMapperWrap;
 import com.jnxaread.service.UserService;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +17,12 @@ import java.util.List;
 public class UserServiceImpl extends BaseUserServiceImpl implements UserService {
 
     @Resource
-    private UserMapper userMapper;
+    private UserMapperWrap userMapper;
 
     @Override
     public List<User> getUserList() {
         UserExample example = new UserExample();
-        List<User> userList = userMapper.selectByExample(example);
-        return userList;
+        return userMapper.selectByExample(example);
     }
 
 }

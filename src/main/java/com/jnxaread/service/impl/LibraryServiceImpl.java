@@ -1,7 +1,7 @@
 package com.jnxaread.service.impl;
 
 import com.jnxaread.bean.Category;
-import com.jnxaread.dao.CategoryMapper;
+import com.jnxaread.dao.wrap.CategoryMapperWrap;
 import com.jnxaread.service.LibraryService;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ import javax.annotation.Resource;
 public class LibraryServiceImpl extends BaseLibraryServiceImpl implements LibraryService {
 
     @Resource
-    private CategoryMapper categoryMapper;
+    private CategoryMapperWrap categoryMapper;
 
     @Override
     public int addCategory(Category category) {
