@@ -1,5 +1,6 @@
 package com.jnxaread.controller;
 
+import com.jnxaread.bean.Project;
 import com.jnxaread.bean.wrap.ProjectWrap;
 import com.jnxaread.entity.UnifiedResult;
 import com.jnxaread.service.ProjectService;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,10 +25,28 @@ public class ProjectController {
     @Resource
     private ProjectService projectService;
 
+    /**
+     * 获取所有版本信息接口
+     *
+     * @return 版本信息列表
+     */
     @PostMapping("/list/version")
     public UnifiedResult getVersionList() {
         List<ProjectWrap> versionList = projectService.getVersionList();
         return UnifiedResult.ok(versionList);
+    }
+
+    /**
+     * 发布版本接口
+     *
+     * @param newProject 新版本对象
+     * @return 保存结果
+     */
+    @PostMapping("/new/project")
+    public UnifiedResult addProject(Project newProject) {
+        newProject.setCreateTime(new Date());
+        projectService.addProject(newProject);
+        return UnifiedResult.ok();
     }
 
 }

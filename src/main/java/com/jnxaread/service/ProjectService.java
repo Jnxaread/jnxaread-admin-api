@@ -1,5 +1,6 @@
 package com.jnxaread.service;
 
+import com.jnxaread.bean.Project;
 import com.jnxaread.bean.wrap.ProjectWrap;
 
 import java.util.List;
@@ -11,5 +12,7 @@ import java.util.List;
 public interface ProjectService extends BaseProjectService {
 
     List<ProjectWrap> getVersionList();
+
+    void addProject(Project newProject);
 
 }
