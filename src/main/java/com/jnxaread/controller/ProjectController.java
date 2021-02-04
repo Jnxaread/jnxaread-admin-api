@@ -1,6 +1,7 @@
 package com.jnxaread.controller;
 
 import com.jnxaread.bean.Project;
+import com.jnxaread.bean.User;
 import com.jnxaread.bean.wrap.ProjectWrap;
 import com.jnxaread.entity.UnifiedResult;
 import com.jnxaread.service.ProjectService;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 
@@ -42,8 +44,10 @@ public class ProjectController {
      * @param newProject 新版本对象
      * @return 保存结果
      */
-    @PostMapping("/new/project")
-    public UnifiedResult addProject(Project newProject) {
+    @PostMapping("/new/version")
+    public UnifiedResult addProject(HttpSession session, Project newProject) {
+        User admin = (User) session.getAttribute("admin");
+        newProject.setUserId(admin.getId());
         newProject.setCreateTime(new Date());
         projectService.addProject(newProject);
         return UnifiedResult.ok();
