@@ -6,6 +6,8 @@ import com.jnxaread.bean.User;
 import com.jnxaread.entity.UnifiedResult;
 import com.jnxaread.service.ForumService;
 import com.jnxaread.util.ContentUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +31,8 @@ public class ForumController {
 
     @Resource
     private ForumService forumService;
+
+    private final Logger logger = LoggerFactory.getLogger("action");
 
     /**
      * 发布公告接口
@@ -71,6 +75,11 @@ public class ForumController {
         newNotice.setCreateTime(date);
         newNotice.setLastTime(date);
         int noticeId = forumService.addNotice(newNotice);
+
+        //    789-submitNotice-36
+        String logMsg = admin.getId() + "-submitNotice-" + noticeId;
+        logger.info(logMsg);
+
         return UnifiedResult.ok(noticeId);
     }
 
@@ -92,7 +101,7 @@ public class ForumController {
      * @return 新版块ID
      */
     @PostMapping("/new/board")
-    public UnifiedResult addBoard(Board newBoard) {
+    public UnifiedResult addBoard(HttpSession session, Board newBoard) {
         if (newBoard == null) {
             return UnifiedResult.build("400", "参数不能为空", null);
         } else if (newBoard.getName() == null) {
@@ -102,8 +111,17 @@ public class ForumController {
         } else if (newBoard.getRestricted() == null) {
             return UnifiedResult.build("400", "限制性等级不能为空", null);
         }
+
+        User admin = (User) session.getAttribute("admin");
+        newBoard.setUserId(admin.getId());
+        newBoard.setManagerId(admin.getId());
         newBoard.setCreateTime(new Date());
         int boardId = forumService.addBoard(newBoard);
+
+        //    789-addBoard-36
+        String logMsg = admin.getId() + "-addBoard-" + boardId;
+        logger.info(logMsg);
+
         return UnifiedResult.ok(boardId);
     }
 

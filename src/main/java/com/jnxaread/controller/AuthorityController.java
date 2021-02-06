@@ -14,12 +14,13 @@ import java.util.List;
  * @create 2020-04-21 21:08
  */
 @RestController
+@RequestMapping("/auth")
 public class AuthorityController {
 
     @Resource
     private AuthorityService authorityService;
 
-    @RequestMapping("/getList")
+    @RequestMapping("/list/auth")
     public List<Authority> getList(){
         return authorityService.getAuthorityList();
     }

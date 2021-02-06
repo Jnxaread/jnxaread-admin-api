@@ -5,6 +5,8 @@ import com.jnxaread.bean.User;
 import com.jnxaread.bean.wrap.ProjectWrap;
 import com.jnxaread.entity.UnifiedResult;
 import com.jnxaread.service.ProjectService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +28,8 @@ public class ProjectController {
 
     @Resource
     private ProjectService projectService;
+
+    private final Logger logger = LoggerFactory.getLogger("action");
 
     /**
      * 获取所有版本信息接口
@@ -49,7 +53,11 @@ public class ProjectController {
         User admin = (User) session.getAttribute("admin");
         newProject.setUserId(admin.getId());
         newProject.setCreateTime(new Date());
-        projectService.addProject(newProject);
+        int projectId = projectService.addProject(newProject);
+
+        String logMsg = admin.getId() + "-addProject-" + projectId;
+        logger.info(logMsg);
+
         return UnifiedResult.ok();
     }
 

@@ -1,13 +1,17 @@
 package com.jnxaread.controller;
 
 import com.jnxaread.bean.Category;
+import com.jnxaread.bean.User;
 import com.jnxaread.entity.UnifiedResult;
 import com.jnxaread.service.LibraryService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +25,8 @@ public class LibraryController {
 
     @Resource
     private LibraryService libraryService;
+
+    private final Logger logger= LoggerFactory.getLogger("action");
 
     /**
      * 获取所有作品类别接口
@@ -41,7 +47,7 @@ public class LibraryController {
      * @return 新类别ID
      */
     @PostMapping("/new/category")
-    public UnifiedResult addCategory(Category newCategory) {
+    public UnifiedResult addCategory(HttpSession session, Category newCategory) {
         if (newCategory == null) {
             return UnifiedResult.build("400", "参数错误", null);
         } else if (newCategory.getName() == null) {
@@ -51,8 +57,15 @@ public class LibraryController {
         } else if (newCategory.getRestricted() == null) {
             return UnifiedResult.build("400", "限制性等级不能为空", null);
         }
+        User admin = (User) session.getAttribute("admin");
+        newCategory.setUserId(admin.getId());
+        newCategory.setManagerId(admin.getId());
         newCategory.setCreateTime(new Date());
         int categoryId = libraryService.addCategory(newCategory);
+
+        String logMsg=admin.getId()+"-addCategory-"+categoryId;
+        logger.info(logMsg);
+
         return UnifiedResult.ok(categoryId);
     }
 

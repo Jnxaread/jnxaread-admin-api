@@ -25,7 +25,8 @@ public class ProjectServiceImpl extends BaseProjectServiceImpl implements Projec
     }
 
     @Override
-    public void addProject(Project newProject) {
+    public int addProject(Project newProject) {
         projectMapper.insertSelective(newProject);
+        return newProject.getId();
     }
 }

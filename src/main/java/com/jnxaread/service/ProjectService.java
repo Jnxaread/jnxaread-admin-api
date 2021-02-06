@@ -13,6 +13,6 @@ public interface ProjectService extends BaseProjectService {
 
     List<ProjectWrap> getVersionList();
 
-    void addProject(Project newProject);
+    int addProject(Project newProject);
 
 }
