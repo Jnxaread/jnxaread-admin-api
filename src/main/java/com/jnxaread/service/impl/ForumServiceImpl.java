@@ -1,9 +1,7 @@
 package com.jnxaread.service.impl;
 
 import com.jnxaread.bean.Board;
-import com.jnxaread.bean.Notice;
 import com.jnxaread.dao.wrap.BoardMapperWrap;
-import com.jnxaread.dao.wrap.NoticeMapperWrap;
 import com.jnxaread.service.ForumService;
 import org.springframework.stereotype.Service;
 
@@ -19,18 +17,9 @@ public class ForumServiceImpl extends BaseForumServiceImpl implements ForumServi
     @Resource
     private BoardMapperWrap boardMapper;
 
-    @Resource
-    private NoticeMapperWrap noticeMapper;
-
     @Override
     public int addBoard(Board newBoard) {
         boardMapper.insertSelective(newBoard);
         return newBoard.getId();
-    }
-
-    @Override
-    public int addNotice(Notice newNotice) {
-        noticeMapper.insertSelective(newNotice);
-        return newNotice.getId();
     }
 }
