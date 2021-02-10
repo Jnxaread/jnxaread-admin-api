@@ -55,7 +55,6 @@ public class UserController {
         }
         session.setAttribute("admin", user);
 
-        // 245-192.169.2.105-1-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
         String loginMsg = user.getId() + "-login-" + request.getRemoteAddr() + "-" + request.getHeader("User-Agent");
         logger.info(loginMsg);
 
@@ -74,7 +73,6 @@ public class UserController {
         if (admin == null) return UnifiedResult.build("400", "用户未登录", null);
         session.removeAttribute("admin");
 
-        // 245-192.169.2.105-1-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
         String logMsg = admin.getId() + "-logout";
         logger.info(logMsg);
 
