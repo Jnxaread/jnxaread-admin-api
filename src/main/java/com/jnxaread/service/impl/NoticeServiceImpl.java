@@ -1,6 +1,7 @@
 package com.jnxaread.service.impl;
 
 import com.jnxaread.bean.Notice;
+import com.jnxaread.bean.NoticeExample;
 import com.jnxaread.dao.wrap.NoticeMapperWrap;
 import com.jnxaread.service.NoticeService;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,12 @@ public class NoticeServiceImpl extends BaseNoticeServiceImpl implements NoticeSe
     public int addNotice(Notice newNotice) {
         noticeMapper.insertSelective(newNotice);
         return newNotice.getId();
+    }
+
+    @Override
+    public long getNoticeCount() {
+        NoticeExample example=new NoticeExample();
+        return noticeMapper.countByExample(example);
     }
 
 }

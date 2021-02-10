@@ -10,4 +10,6 @@ public interface NoticeService extends BaseNoticeService {
 
     int addNotice(Notice newNotice);
 
+    long getNoticeCount();
+
 }

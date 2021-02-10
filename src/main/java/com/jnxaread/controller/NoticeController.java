@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -40,7 +42,29 @@ public class NoticeController {
     @RequestMapping("/list/notice")
     public UnifiedResult getNoticeList() {
         List<NoticeWrap> noticeWrapList = noticeService.getNoticeWrapList();
-        return UnifiedResult.ok(noticeWrapList);
+        long noticeCount = noticeService.getNoticeCount();
+        Map<String, Object> map = new HashMap<>();
+        map.put("notices", noticeWrapList);
+        map.put("count", noticeCount);
+        return UnifiedResult.ok(map);
+    }
+
+    /**
+     * 获取公告详情接口
+     *
+     * @param id 公告id
+     * @return 公告详细内容
+     */
+    @RequestMapping("/detail/notice")
+    public UnifiedResult getNotice(Integer id) {
+        if (id == null) {
+            return UnifiedResult.build("400", "参数错误", null);
+        }
+        NoticeWrap noticeWrap = noticeService.getNoticeWrap(id);
+        if (noticeWrap == null) {
+            return UnifiedResult.build("400", "公告不存在", null);
+        }
+        return UnifiedResult.ok(noticeWrap);
     }
 
     /**
