@@ -2,6 +2,7 @@ package com.jnxaread.service.impl;
 
 import com.jnxaread.bean.Notice;
 import com.jnxaread.bean.NoticeExample;
+import com.jnxaread.dao.wrap.BoardMapperWrap;
 import com.jnxaread.dao.wrap.NoticeMapperWrap;
 import com.jnxaread.service.NoticeService;
 import org.springframework.stereotype.Service;
@@ -14,13 +15,15 @@ import javax.annotation.Resource;
  */
 @Service
 public class NoticeServiceImpl extends BaseNoticeServiceImpl implements NoticeService {
-
     @Resource
     private NoticeMapperWrap noticeMapper;
+    @Resource
+    private BoardMapperWrap boardMapper;
 
     @Override
     public int addNotice(Notice newNotice) {
         noticeMapper.insertSelective(newNotice);
+        boardMapper.updateNoticeCountByPrimaryKey(newNotice.getBoardId());
         return newNotice.getId();
     }
 
