@@ -9,7 +9,7 @@
         <relativePath/>
     </parent>
     <artifactId>jnxaread-admin-api</artifactId>
-    <version>${jnxaread.version}</version>
+    <version>1.0.0</version>
     <name>jnxaread-admin-api</name>
     <description>谨下计划后台服务系统</description>
 
