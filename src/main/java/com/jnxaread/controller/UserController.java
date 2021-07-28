@@ -24,11 +24,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+    private final Logger logger = LoggerFactory.getLogger("action");
 
     @Resource
     private UserService userService;
 
-    private final Logger logger = LoggerFactory.getLogger("action");
 
     /**
      * 管理员登录接口

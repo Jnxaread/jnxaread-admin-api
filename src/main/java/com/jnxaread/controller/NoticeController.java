@@ -28,7 +28,6 @@ import java.util.regex.Pattern;
 @RestController
 @RequestMapping("/forum")
 public class NoticeController {
-
     @Resource
     private NoticeService noticeService;
 

@@ -24,11 +24,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/forum")
 public class ForumController {
+    private final Logger logger = LoggerFactory.getLogger("action");
 
     @Resource
     private ForumService forumService;
 
-    private final Logger logger = LoggerFactory.getLogger("action");
 
     /**
      * 获取版块列表接口
@@ -51,11 +51,14 @@ public class ForumController {
     public UnifiedResult addBoard(HttpSession session, Board newBoard) {
         if (newBoard == null) {
             return UnifiedResult.build("400", "参数不能为空", null);
-        } else if (newBoard.getName() == null) {
+        }
+        if (newBoard.getName() == null) {
             return UnifiedResult.build("400", "版块名称不能为空", null);
-        } else if (newBoard.getDescription() == null) {
+        }
+        if (newBoard.getDescription() == null) {
             return UnifiedResult.build("400", "版块说明不能为空", null);
-        } else if (newBoard.getRestricted() == null) {
+        }
+        if (newBoard.getRestricted() == null) {
             return UnifiedResult.build("400", "限制性等级不能为空", null);
         }
 

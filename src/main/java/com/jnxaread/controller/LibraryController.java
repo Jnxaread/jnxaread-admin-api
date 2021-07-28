@@ -22,11 +22,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/library")
 public class LibraryController {
+    private final Logger logger= LoggerFactory.getLogger("action");
 
     @Resource
     private LibraryService libraryService;
 
-    private final Logger logger= LoggerFactory.getLogger("action");
 
     /**
      * 获取所有作品类别接口

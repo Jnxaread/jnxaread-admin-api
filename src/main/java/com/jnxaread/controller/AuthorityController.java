@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  * 权限信息测试类
+ *
  * @author 未央
  * @create 2020-04-21 21:08
  */
@@ -21,7 +22,7 @@ public class AuthorityController {
     private AuthorityService authorityService;
 
     @RequestMapping("/list/auth")
-    public List<Authority> getList(){
+    public List<Authority> getList() {
         return authorityService.getAuthorityList();
     }
 

@@ -25,11 +25,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/project")
 public class ProjectController {
+    private final Logger logger = LoggerFactory.getLogger("action");
 
     @Resource
     private ProjectService projectService;
 
-    private final Logger logger = LoggerFactory.getLogger("action");
 
     /**
      * 获取所有版本信息接口
