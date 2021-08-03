@@ -120,19 +120,8 @@ public class NoticeController {
         if (id == null || visible == null) {
             return UnifiedResult.build("400", "", null);
         }
-        int status = noticeService.hideNotice(id, visible);
-        switch (status) {
-            case 0:
-                return UnifiedResult.ok();
-            case 1:
-                return UnifiedResult.build("400", "公告不存在", "");
-            case 2:
-                return UnifiedResult.build("400", "公告已下架", "");
-            case 3:
-                return UnifiedResult.build("400", "公告已上架", "");
-            default:
-                return UnifiedResult.build("500", "未知错误", "");
-        }
+        noticeService.hideNotice(id, visible);
+        return UnifiedResult.ok();
     }
 
     @PostMapping("/lock/notice")
@@ -140,19 +129,8 @@ public class NoticeController {
         if (id == null || locked == null) {
             return UnifiedResult.build("400", "参数错误", null);
         }
-        int status = noticeService.lockNotice(id, locked);
-        switch (status) {
-            case 0:
-                return UnifiedResult.ok();
-            case 1:
-                return UnifiedResult.build("400", "公告不存在", "");
-            case 2:
-                return UnifiedResult.build("400", "公告已锁定", "");
-            case 3:
-                return UnifiedResult.build("400", "公告已解锁", "");
-            default:
-                return UnifiedResult.build("500", "未知错误", "");
-        }
+        noticeService.lockNotice(id, locked);
+        return UnifiedResult.ok();
     }
 
 }

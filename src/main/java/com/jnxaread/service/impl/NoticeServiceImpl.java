@@ -4,10 +4,13 @@ import com.jnxaread.bean.Notice;
 import com.jnxaread.bean.NoticeExample;
 import com.jnxaread.dao.wrap.BoardMapperWrap;
 import com.jnxaread.dao.wrap.NoticeMapperWrap;
+import com.jnxaread.entity.GlobalException;
 import com.jnxaread.service.NoticeService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+
+import static com.jnxaread.constant.UnifiedCode.*;
 
 /**
  * @Author 未央
@@ -34,28 +37,27 @@ public class NoticeServiceImpl extends BaseNoticeServiceImpl implements NoticeSe
     }
 
     @Override
-    public int hideNotice(int id, int visible) {
+    public void hideNotice(int id, int visible) {
         Notice notice = noticeMapper.selectByPrimaryKey(id);
         if (notice == null || notice.getDeleted()) {
-            return 1;
+            throw new GlobalException(NOTICE_NOT_EXIST.getCode(), NOTICE_NOT_EXIST.getDescribe());
         }
         if (notice.getVisible() == visible) {
             if (visible == 0) {
-                return 2;
+                throw new GlobalException(NOTICE_ALREADY_OFF_SHELF.getCode(), NOTICE_ALREADY_OFF_SHELF.getDescribe());
             } else if (visible == 1) {
-                return 3;
+                throw new GlobalException(NOTICE_ALREADY_ON_SHELF.getCode(), NOTICE_ALREADY_ON_SHELF.getDescribe());
             }
         }
         notice.setVisible(visible);
         noticeMapper.updateByPrimaryKeySelective(notice);
-        return 0;
     }
 
     @Override
-    public int lockNotice(int id, int locked) {
+    public void lockNotice(int id, int locked) {
         Notice notice = noticeMapper.selectByPrimaryKey(id);
         if (notice == null || notice.getDeleted()) {
-            return 1;
+            throw new GlobalException(NOTICE_NOT_EXIST.getCode(), NOTICE_NOT_EXIST.getDescribe());
         }
         int original = 0;
         if (notice.getLocked()) {
@@ -63,14 +65,13 @@ public class NoticeServiceImpl extends BaseNoticeServiceImpl implements NoticeSe
         }
         if (original == locked) {
             if (locked == 0) {
-                return 2;
+                throw new GlobalException(NOTICE_ALREADY_LOCKED.getCode(), NOTICE_ALREADY_LOCKED.getDescribe());
             } else {
-                return 3;
+                throw new GlobalException(NOTICE_ALREADY_UNLOCKED.getCode(), NOTICE_ALREADY_UNLOCKED.getDescribe());
             }
         }
         notice.setLocked(!notice.getLocked());
         noticeMapper.updateByPrimaryKeySelective(notice);
-        return 0;
     }
 
 }

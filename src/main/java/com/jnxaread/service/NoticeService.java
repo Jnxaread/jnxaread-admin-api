@@ -12,8 +12,8 @@ public interface NoticeService extends BaseNoticeService {
 
     long getNoticeCount();
 
-    int hideNotice(int id, int visible);
+    void hideNotice(int id, int visible);
 
-    int lockNotice(int id, int locked);
+    void lockNotice(int id, int locked);
 
 }
