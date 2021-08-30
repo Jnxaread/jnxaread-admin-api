@@ -50,16 +50,16 @@ public class ForumController {
     @PostMapping("/new/board")
     public UnifiedResult addBoard(HttpSession session, Board newBoard) {
         if (newBoard == null) {
-            return UnifiedResult.build("400", "参数不能为空", null);
+            return UnifiedResult.build("400", "参数不能为空");
         }
         if (newBoard.getName() == null) {
-            return UnifiedResult.build("400", "版块名称不能为空", null);
+            return UnifiedResult.build("400", "版块名称不能为空");
         }
         if (newBoard.getDescription() == null) {
-            return UnifiedResult.build("400", "版块说明不能为空", null);
+            return UnifiedResult.build("400", "版块说明不能为空");
         }
         if (newBoard.getRestricted() == null) {
-            return UnifiedResult.build("400", "限制性等级不能为空", null);
+            return UnifiedResult.build("400", "限制性等级不能为空");
         }
 
         User admin = (User) session.getAttribute("admin");

@@ -49,13 +49,13 @@ public class LibraryController {
     @PostMapping("/new/category")
     public UnifiedResult addCategory(HttpSession session, Category newCategory) {
         if (newCategory == null) {
-            return UnifiedResult.build("400", "参数错误", null);
+            return UnifiedResult.build("400", "参数错误");
         } else if (newCategory.getName() == null) {
-            return UnifiedResult.build("400", "类别名称不能为空", null);
+            return UnifiedResult.build("400", "类别名称不能为空");
         } else if (newCategory.getDescription() == null) {
-            return UnifiedResult.build("400", "类别说明不能为空", null);
+            return UnifiedResult.build("400", "类别说明不能为空");
         } else if (newCategory.getRestricted() == null) {
-            return UnifiedResult.build("400", "限制性等级不能为空", null);
+            return UnifiedResult.build("400", "限制性等级不能为空");
         }
         User admin = (User) session.getAttribute("admin");
         newCategory.setUserId(admin.getId());
