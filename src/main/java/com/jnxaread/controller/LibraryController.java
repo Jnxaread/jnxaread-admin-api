@@ -2,7 +2,7 @@ package com.jnxaread.controller;
 
 import com.jnxaread.bean.Category;
 import com.jnxaread.bean.User;
-import com.jnxaread.entity.UnifiedResult;
+import com.jnxaread.common.UnifiedResult;
 import com.jnxaread.service.LibraryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -3,7 +3,7 @@ package com.jnxaread.controller;
 import com.jnxaread.bean.Notice;
 import com.jnxaread.bean.User;
 import com.jnxaread.bean.wrap.NoticeWrap;
-import com.jnxaread.entity.UnifiedResult;
+import com.jnxaread.common.UnifiedResult;
 import com.jnxaread.service.NoticeService;
 import com.jnxaread.util.ContentUtil;
 import org.slf4j.Logger;

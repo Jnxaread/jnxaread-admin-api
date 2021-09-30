@@ -4,7 +4,7 @@ import com.jnxaread.bean.Notice;
 import com.jnxaread.bean.NoticeExample;
 import com.jnxaread.dao.wrap.BoardMapperWrap;
 import com.jnxaread.dao.wrap.NoticeMapperWrap;
-import com.jnxaread.entity.GlobalException;
+import com.jnxaread.exception.GlobalException;
 import com.jnxaread.service.NoticeService;
 import org.springframework.stereotype.Service;
 

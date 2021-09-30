@@ -3,7 +3,7 @@ package com.jnxaread.controller;
 import com.jnxaread.bean.Project;
 import com.jnxaread.bean.User;
 import com.jnxaread.bean.wrap.ProjectWrap;
-import com.jnxaread.entity.UnifiedResult;
+import com.jnxaread.common.UnifiedResult;
 import com.jnxaread.service.ProjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
