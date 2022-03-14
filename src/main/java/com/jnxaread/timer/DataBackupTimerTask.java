@@ -15,7 +15,8 @@ public class DataBackupTimerTask {
     @Resource
     private DataBackupService dataBackupService;
 
-    @Scheduled(cron = " 0 0 3 ? * 2 ")
+    // 执行时间：每周二凌晨三点
+    @Scheduled(cron = " 0 0 3 ? * 3 ")
     public void dataBackup() {
         dataBackupService.dataBackup();
     }
