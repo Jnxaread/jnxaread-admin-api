@@ -27,10 +27,6 @@ public class DataBackupServiceImpl implements DataBackupService {
     private String path;
     @Resource
     private MailUtil mailUtil;
-    @Value("${spring.mail.username}")
-    private String usernameOfSender;
-    @Value("${spring.mail.nickname}")
-    private String nicknameOfSender;
     @Value("${jnxaread.data-backup.mail}")
     private String backupMailAddress;
     private final DateTimeFormatter filePattern = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
@@ -178,9 +174,9 @@ public class DataBackupServiceImpl implements DataBackupService {
         logger.info("开始发送邮件：{}，接收人：{}", title, backupMailAddress);
         try {
             if (file == null) {
-                mailUtil.send(usernameOfSender, nicknameOfSender, backupMailAddress, title, text);
+                mailUtil.send(backupMailAddress, title, text);
             } else {
-                mailUtil.send(usernameOfSender, nicknameOfSender, backupMailAddress, title, text, file);
+                mailUtil.send(backupMailAddress, title, text, file);
             }
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
