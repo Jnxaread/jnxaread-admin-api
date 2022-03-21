@@ -84,7 +84,7 @@ public class UserController {
      *
      * @return 用户列表
      */
-    @PostMapping("/list/user")
+    @PostMapping("/list")
     public UnifiedResult getUserList() {
         List<User> userList = userService.getUserList();
         return UnifiedResult.ok(userList);

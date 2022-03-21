@@ -16,4 +16,5 @@ public interface NoticeService extends BaseNoticeService {
 
     void lockNotice(int id, int locked);
 
+    void upToTop(Integer id);
 }

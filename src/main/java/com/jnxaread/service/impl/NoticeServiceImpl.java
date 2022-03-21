@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
+import java.util.List;
+
 import static com.jnxaread.constant.UnifiedCode.*;
 
 /**
@@ -25,6 +27,8 @@ public class NoticeServiceImpl extends BaseNoticeServiceImpl implements NoticeSe
 
     @Override
     public int addNotice(Notice newNotice) {
+        Integer maxPosition = noticeMapper.selectMaxPosition();
+        newNotice.setPosition(maxPosition == null ? 1 : maxPosition + 1);
         noticeMapper.insertSelective(newNotice);
         boardMapper.updateNoticeCountByPrimaryKey(newNotice.getBoardId());
         return newNotice.getId();
@@ -72,6 +76,19 @@ public class NoticeServiceImpl extends BaseNoticeServiceImpl implements NoticeSe
         }
         notice.setLocked(!notice.getLocked());
         noticeMapper.updateByPrimaryKeySelective(notice);
+    }
+
+    @Override
+    public void upToTop(Integer id) {
+        Notice record = noticeMapper.selectByPrimaryKey(id);
+        if (record == null) {
+            throw new GlobalException(NOTICE_NOT_EXIST.getCode(), NOTICE_NOT_EXIST.getDescribe());
+        }
+        List<Notice> topList = noticeMapper.findListByPosition(1, record.getPosition() - 1);
+        for (Notice notice : topList) {
+            notice.setPosition(notice.getPosition() + 1);
+            noticeMapper.updateByPrimaryKeySelective(notice);
+        }
     }
 
 }

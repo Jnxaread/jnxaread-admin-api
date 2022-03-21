@@ -21,6 +21,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.jnxaread.constant.UnifiedCode.PARAMETER_INVALID;
+
 /**
  * @Author 未央
  * @Create 2021-02-10 15:23
@@ -130,6 +132,23 @@ public class NoticeController {
             return UnifiedResult.build("400", "参数错误");
         }
         noticeService.lockNotice(id, locked);
+        return UnifiedResult.ok();
+    }
+
+    /**
+     * 置顶公告接口
+     *
+     * @param id 公告Id
+     * @return 操作结果
+     */
+    @PostMapping("/upToTop")
+    public UnifiedResult upToTop(Integer id) {
+        if (id == null) {
+            String code = PARAMETER_INVALID.getCode();
+            String desc = PARAMETER_INVALID.getDescribe();
+            return UnifiedResult.build(code, desc);
+        }
+        noticeService.upToTop(id);
         return UnifiedResult.ok();
     }
 
