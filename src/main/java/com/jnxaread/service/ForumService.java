@@ -11,4 +11,6 @@ public interface ForumService extends BaseForumService {
     int addBoard(Board newBoard);
 
     void deleteReply(Integer id);
+
+    void updateVisibleOfTopic(Integer id, Integer visible);
 }

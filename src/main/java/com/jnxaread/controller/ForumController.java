@@ -88,13 +88,16 @@ public class ForumController {
      */
     @PostMapping("/topic/list")
     public UnifiedResult getTopicList(Integer userId, Integer page) {
-        if (userId == null || page == null) {
+        if (page == null) {
             return UnifiedResult.build(PARAMETER_INVALID.getCode(), PARAMETER_INVALID.getDescribe());
+        }
+        if (userId == null) {
+            userId = 0;
         }
 
         // level为6，表示获取所有帖子
         Map<String, Object> map = new HashMap<>();
-        List<TopicWrap> topicWrapList = forumService.getTopicWrapList(userId, 6, page, 45);
+        List<TopicWrap> topicWrapList = forumService.getTopicWrapList(userId, 6, 0, page, 45);
 
         long topicCount = forumService.getTopicCount();
         map.put("topicList", topicWrapList);
@@ -129,6 +132,15 @@ public class ForumController {
         topicMap.put("replies", wrapReplyList);
         topicMap.put("replyCount", replyCount);
         return UnifiedResult.ok(topicMap);
+    }
+
+    @PostMapping("/topic/visible")
+    public UnifiedResult updateVisibleOfTopic(Integer id, Integer visible) {
+        if (id == null || visible == null) {
+            return UnifiedResult.build(PARAMETER_INVALID.getCode(), PARAMETER_INVALID.getDescribe());
+        }
+        forumService.updateVisibleOfTopic(id, visible);
+        return UnifiedResult.ok();
     }
 
     /**

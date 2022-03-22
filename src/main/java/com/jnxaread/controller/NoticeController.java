@@ -153,7 +153,7 @@ public class NoticeController {
      * @param id 公告Id
      * @return 操作结果
      */
-    @PostMapping("/upToTop")
+    @PostMapping("/notice/upToTop")
     public UnifiedResult upToTop(Integer id) {
         if (id == null) {
             String code = PARAMETER_INVALID.getCode();

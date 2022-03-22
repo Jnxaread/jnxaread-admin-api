@@ -37,7 +37,7 @@ public class NoticeServiceImpl extends BaseNoticeServiceImpl implements NoticeSe
     @Override
     public void updateNotice(Notice notice) {
         notice.setUpdateCount(notice.getUpdateCount()+1);
-        noticeMapper.updateByPrimaryKey(notice);
+        noticeMapper.updateByPrimaryKeySelective(notice);
     }
 
     @Override
