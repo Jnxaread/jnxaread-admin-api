@@ -2,6 +2,7 @@ package com.jnxaread.controller;
 
 import com.jnxaread.bean.Board;
 import com.jnxaread.bean.User;
+import com.jnxaread.bean.wrap.ReplyWrap;
 import com.jnxaread.bean.wrap.TopicWrap;
 import com.jnxaread.common.UnifiedResult;
 import com.jnxaread.service.ForumService;
@@ -13,12 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.jnxaread.constant.UnifiedCode.PARAMETER_INVALID;
+import static com.jnxaread.constant.UnifiedCode.TOPIC_NOT_EXIST;
 
 /**
  * 关于论坛模块的管理接口
@@ -101,5 +100,49 @@ public class ForumController {
         map.put("topicList", topicWrapList);
         map.put("topicCount", topicCount);
         return UnifiedResult.ok(map);
+    }
+
+    /**
+     * 获取帖子详情接口
+     *
+     * @param id   帖子id
+     * @param page 帖子回复页码
+     * @return 帖子、回复列表和回复总数
+     */
+    @PostMapping("/topic/detail")
+    public UnifiedResult getTopic(Integer id, Integer page) {
+        if (id == null || page == null) {
+            return UnifiedResult.build(PARAMETER_INVALID.getCode(), PARAMETER_INVALID.getDescribe());
+        }
+        Map<String, Object> topicMap = new HashMap<>();
+
+        TopicWrap wrapTopic = forumService.getTopicWrap(id);
+        if (wrapTopic == null) {
+            return UnifiedResult.build(TOPIC_NOT_EXIST.getCode(), TOPIC_NOT_EXIST.getDescribe());
+        }
+
+        List<ReplyWrap> wrapReplyList = forumService.getReplyWrapList(id, page);
+
+        long replyCount = forumService.getReplyCountByTopicId(id);
+
+        topicMap.put("topic", wrapTopic);
+        topicMap.put("replies", wrapReplyList);
+        topicMap.put("replyCount", replyCount);
+        return UnifiedResult.ok(topicMap);
+    }
+
+    /**
+     * 删除回复
+     *
+     * @param id 回复id
+     * @return 执行结果
+     */
+    @PostMapping("/reply/delete")
+    public UnifiedResult deleteReply(Integer id) {
+        if (id == null) {
+            return UnifiedResult.build(PARAMETER_INVALID.getCode(), PARAMETER_INVALID.getDescribe());
+        }
+        forumService.deleteReply(id);
+        return UnifiedResult.ok();
     }
 }

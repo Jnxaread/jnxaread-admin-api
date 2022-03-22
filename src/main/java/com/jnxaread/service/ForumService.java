@@ -10,4 +10,5 @@ public interface ForumService extends BaseForumService {
 
     int addBoard(Board newBoard);
 
+    void deleteReply(Integer id);
 }
