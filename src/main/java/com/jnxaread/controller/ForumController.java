@@ -2,6 +2,7 @@ package com.jnxaread.controller;
 
 import com.jnxaread.bean.Board;
 import com.jnxaread.bean.User;
+import com.jnxaread.bean.wrap.TopicWrap;
 import com.jnxaread.common.UnifiedResult;
 import com.jnxaread.service.ForumService;
 import org.slf4j.Logger;
@@ -13,7 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static com.jnxaread.constant.UnifiedCode.PARAMETER_INVALID;
 
 /**
  * 关于论坛模块的管理接口
@@ -75,4 +80,26 @@ public class ForumController {
         return UnifiedResult.ok(boardId);
     }
 
+    /**
+     * 获取帖子列表接口
+     *
+     * @param userId 用户id
+     * @param page   列表页码
+     * @return 帖子列表和帖子总数
+     */
+    @PostMapping("/topic/list")
+    public UnifiedResult getTopicList(Integer userId, Integer page) {
+        if (userId == null || page == null) {
+            return UnifiedResult.build(PARAMETER_INVALID.getCode(), PARAMETER_INVALID.getDescribe());
+        }
+
+        // level为6，表示获取所有帖子
+        Map<String, Object> map = new HashMap<>();
+        List<TopicWrap> topicWrapList = forumService.getTopicWrapList(userId, 6, page, 45);
+
+        long topicCount = forumService.getTopicCount();
+        map.put("topicList", topicWrapList);
+        map.put("topicCount", topicCount);
+        return UnifiedResult.ok(map);
+    }
 }
