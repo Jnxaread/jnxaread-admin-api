@@ -69,49 +69,61 @@ public class NoticeController {
     }
 
     /**
-     * 发布公告接口
+     * 发布或编辑公告
      *
-     * @param session   请求session对象
-     * @param newNotice 新公告表单数据
-     * @return 执行结果及公告ID
+     * @param session 请求Session对象
+     * @param notice  要发布或编辑的公告
+     * @return 执行结果及公告id
      */
-    @PostMapping("/new/notice")
-    public UnifiedResult submitNotice(HttpSession session, Notice newNotice) {
-        if (newNotice == null) {
+    @PostMapping("/notice/addOrUpdate")
+    public UnifiedResult submitNotice(HttpSession session, Notice notice) {
+        if (notice == null) {
             return UnifiedResult.build("400", "参数错误");
         }
 
         String regLabel = "^[\\u4e00-\\u9fa5]{2,4}$";
         Pattern pattern = Pattern.compile(regLabel);
-        Matcher matcher = pattern.matcher(newNotice.getLabel());
+        Matcher matcher = pattern.matcher(notice.getLabel());
         if (!matcher.matches()) {
             return UnifiedResult.build("400", "公告标签为2至4位汉字");
         }
 
-        if (newNotice.getTitle().length() < 4 || newNotice.getTitle().length() > 35) {
+        if (notice.getTitle().length() < 4 || notice.getTitle().length() > 35) {
             return UnifiedResult.build("400", "公告标题的长度为4至35个字符");
         }
 
         //校验公告内容是否为空
-        boolean inspection = ContentUtil.inspection(newNotice.getContent());
+        boolean inspection = ContentUtil.inspection(notice.getContent());
         if (!inspection) {
             return UnifiedResult.build("400", "公告内容不能为空！");
         }
 
-        if (newNotice.getContent().length() > 16384) {
+        if (notice.getContent().length() > 16384) {
             return UnifiedResult.build("400", "公告内容的长度不得超过16000个字符");
         }
 
-        User admin = (User) session.getAttribute("admin");
-        newNotice.setUserId(admin.getId());
-        newNotice.setLastUserId(admin.getId());
-        Date date = new Date();
-        newNotice.setCreateTime(date);
-        newNotice.setLastTime(date);
-        int noticeId = noticeService.addNotice(newNotice);
+        String logMsg;
 
-        //    789-submitNotice-36
-        String logMsg = admin.getId() + "-submitNotice-" + noticeId;
+        User admin = (User) session.getAttribute("admin");
+        Date date = new Date();
+        Integer noticeId = notice.getId();
+        if (noticeId == null) {
+            notice.setUserId(admin.getId());
+            notice.setLastUserId(admin.getId());
+            notice.setCreateTime(date);
+            notice.setLastTime(date);
+            noticeId = noticeService.addNotice(notice);
+
+            //    789-submitNotice-36
+            logMsg = admin.getId() + "-submitNotice-" + noticeId;
+        } else {
+            notice.setLastUserId(admin.getId());
+            notice.setLastTime(date);
+            noticeService.updateNotice(notice);
+
+            logMsg = admin.getId() + "-updateNotice-" + noticeId;
+        }
+
         logger.info(logMsg);
 
         return UnifiedResult.ok(noticeId);
