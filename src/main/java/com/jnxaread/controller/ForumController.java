@@ -143,6 +143,25 @@ public class ForumController {
         return UnifiedResult.ok();
     }
 
+    @PostMapping("/topic/lock")
+    public UnifiedResult lockTopic(Integer id, Boolean lock) {
+        if (id == null || lock == null) {
+            return UnifiedResult.build(PARAMETER_INVALID.getCode(), PARAMETER_INVALID.getDescribe());
+        }
+        forumService.updateLockOfTopic(id, lock);
+        return UnifiedResult.ok();
+    }
+
+    @PostMapping("/topic/delete")
+    public UnifiedResult deleteTopic(HttpSession session, Integer id) {
+        if (id == null) {
+            return UnifiedResult.build(PARAMETER_INVALID.getCode(), PARAMETER_INVALID.getDescribe());
+        }
+        User admin = (User) session.getAttribute("admin");
+        forumService.deleteTopic(id, admin);
+        return UnifiedResult.ok();
+    }
+
     /**
      * 删除回复
      *

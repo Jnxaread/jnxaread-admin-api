@@ -3,6 +3,7 @@ package com.jnxaread.service.impl;
 import com.jnxaread.bean.Board;
 import com.jnxaread.bean.Reply;
 import com.jnxaread.bean.Topic;
+import com.jnxaread.bean.User;
 import com.jnxaread.dao.wrap.BoardMapperWrap;
 import com.jnxaread.dao.wrap.ReplyMapperWrap;
 import com.jnxaread.dao.wrap.TopicMapperWrap;
@@ -56,6 +57,32 @@ public class ForumServiceImpl extends BaseForumServiceImpl implements ForumServi
             return;
         }
         record.setVisible(visible);
+        topicMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public void deleteTopic(Integer id, User admin) {
+        Topic record = topicMapper.selectByPrimaryKey(id);
+        if (record == null) {
+            throw new GlobalException(TOPIC_NOT_EXIST.getCode(), TOPIC_NOT_EXIST.getDescribe());
+        }
+        if (record.getDeleted()) {
+            return;
+        }
+        record.setDeleted(true);
+        topicMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public void updateLockOfTopic(Integer id, boolean lock) {
+        Topic record = topicMapper.selectByPrimaryKey(id);
+        if (record == null || record.getDeleted()) {
+            throw new GlobalException(TOPIC_NOT_EXIST.getCode(), TOPIC_NOT_EXIST.getDescribe());
+        }
+        if (record.getLocked() == lock) {
+            return;
+        }
+        record.setLocked(lock);
         topicMapper.updateByPrimaryKey(record);
     }
 }
