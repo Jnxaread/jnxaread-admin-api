@@ -147,9 +147,8 @@ public class DataBackupServiceImpl implements DataBackupService {
      */
     private void processReader(InputStream is, boolean isStd) {
         new Thread(() -> {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             String line;
-            try {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
                 while ((line = reader.readLine()) != null) {
                     if (isStd) {
                         logger.info(line);
